@@ -8,14 +8,13 @@ app.config["MONGO_URI"] = "mongodb+srv://dhruv:Dhruv123@cluster0.bfycuor.mongodb
 mongo = PyMongo(app)
 CORS(app)
 
-# Create
 @app.route('/api/overlays', methods=['POST'])
 def create_overlay():
     overlay = request.json
     result = mongo.db.overlays.insert_one(overlay)
     return jsonify({"id": str(result.inserted_id)}), 201
 
-# Read (all)
+
 @app.route('/api/overlays', methods=['GET'])
 def get_overlays():
     try:
@@ -24,7 +23,7 @@ def get_overlays():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Read (single)
+
 @app.route('/api/overlays/<id>', methods=['GET'])
 def get_overlay(id):
     try:
@@ -35,7 +34,7 @@ def get_overlay(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Update
+
 @app.route('/api/overlays/<id>', methods=['PUT'])
 def update_overlay(id):
     try:
@@ -47,7 +46,7 @@ def update_overlay(id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Delete
+
 @app.route('/api/overlays/<id>', methods=['DELETE'])
 def delete_overlay(id):
     try:
