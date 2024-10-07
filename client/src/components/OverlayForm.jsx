@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
-import ReactPlayer from 'react-player';
-import Overlay from './components/Overlay';
-import OverlayForm from './components/OverlayForm';
+function OverlayForm({ onSubmit, initialValues }) {
+  const [content, setContent] = useState('');
 
-function App() {
-  const [rtspUrl, setRtspUrl] = useState('');
-  const [overlays, setOverlays] = useState([{ id: 1, content: 'Test Overlay', position: { x: 0, y: 0 } }]);
+  useEffect(() => {
+    if (initialValues) {
+      setContent(initialValues.content);
+    }
+  }, [initialValues]);
 
-  const addOverlay = (overlay) => {
-    setOverlays([...overlays, { ...overlay, id: Date.now() }]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ content });
+    if (!initialValues) {
+      setContent('');
+    }
   };
 
   return (
-    <div className="App">
-      <h1>Livestream App</h1>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={rtspUrl}
-        onChange={(e) => setRtspUrl(e.target.value)}
-        placeholder="Enter RTSP URL"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="Overlay content"
       />
-      {rtspUrl && <ReactPlayer url={rtspUrl} controls />}
-      {overlays.map((overlay) => (
-        <Overlay key={overlay.id} {...overlay} />
-      ))}
-      <OverlayForm onSubmit={addOverlay} />
-    </div>
+      <button type="submit">{initialValues ? 'Update' : 'Add'} Overlay</button>
+    </form>
   );
 }
-
-export default App;

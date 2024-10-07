@@ -11,7 +11,7 @@ Install dependencies for both backend and frontend:
 
 Install backend dependencies:
 `cd server`
-``
+`pip install flask flask-pymongo pymongo dnspython flask-cors`
 
 Install frontend dependencies:
 `cd ../client`
